@@ -10,26 +10,21 @@ const INITIAL_STATE = {
 };
 
 const contactsSlice = createSlice({
-  // Ім'я слайсу
   name: "contacts",
-  // Початковий стан редюсера слайсу
   initialState: INITIAL_STATE,
-  // Об'єкт редюсерів
   reducers: {
     addContact(state, action) {
-      state.push(action.payload);
+      state.contacts.items.push(action.payload);
     },
     deleteContact(state, action) {
-      state.contacts = state.contacts.filter(
-        (contact) => contact.id !== action.payload
+      state.contacts.items = state.contacts.items.filter(
+        (item) => item.id !== action.payload
       );
-      state.splice(index, 1);
     },
   },
 });
 
-// Генератори екшенів
-const { addContact, deleteContact } = contactsSlice.actions;
-
-// Редюсер слайсу
 export const contactsReducer = contactsSlice.reducer;
+export const { addContact, deleteContact } = contactsSlice.actions;
+
+export const selectContacts = (state) => state.contacts.contacts.items;

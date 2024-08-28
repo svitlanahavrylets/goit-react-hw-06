@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { statusFilters } from "./constants";
 
 const INITIAL_STATE = {
   contacts: {
@@ -15,11 +14,12 @@ const filtersSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     changeFilter(state, action) {
-      state.name = action.payload;
+      state.filters.name = action.payload;
     },
   },
 });
 
-// Експортуємо генератори екшенів та редюсер
-export const { setNameFilter } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;
+export const { changeFilter } = filtersSlice.actions;
+
+export const filterValue = (state) => state.filters.filters.name;

@@ -1,6 +1,9 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
+import { nanoid } from "nanoid";
 
 const INITIAL_VALUES = {
   name: "",
@@ -18,13 +21,16 @@ const ContactValidationSchema = Yup.object().shape({
     .matches(phoneRegExp, "The phone number must match the format 'xxx-xx-xx'")
     .required("Required"),
 });
-const ContactForm = ({ onAddContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
   const handleSubmit = (values, actions) => {
-    const contactObject = {
-      name: values.name,
-      number: values.number,
-    };
-    onAddContact(contactObject);
+    dispatch(
+      addContact({
+        id: nanoid(),
+        name: values.name,
+        number: values.number,
+      })
+    );
 
     actions.resetForm();
   };
